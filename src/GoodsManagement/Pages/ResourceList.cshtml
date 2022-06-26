@@ -1,0 +1,91 @@
+﻿@page
+@model GoodsManagement.Pages.ResourceListModel
+@{
+    ViewData["Title"] = Model.PageConfig.TitelText;
+}
+
+<div class="text-center">
+    <h1 class="display-4">@Model.PageConfig.MessageText</h1>
+</div>
+<div class="m-3">
+    <form action="./ResourceList?action=OnPost&amp;controller=ResourceList" method="post">
+        <input type="text" id="ResourceName" name="ResourceName" value="@Model.PageConfig.Name" hidden />
+        <input type="text" id="Filter" name="Filter" value="@Model.PageConfig.Filter" style="width:200px;" />
+        <button type="submit" class="btn-primary">フィルタ設定</button>
+        @Html.AntiForgeryToken()
+    </form>
+</div>
+<div>
+    <table>
+        <tbody class="table table-borderless">
+            @{
+                int Colum = 10;
+                for (int l = 0; l < Model.ResourceConfig.Data.MenuItem.Count; l += Colum)
+                {
+                    <tr>
+                        @for (int i = 0; i < Colum; i++)
+                        {
+                            MyUtility.MyUI.MySummary item = Model.ResourceConfig.Data.MenuItem[l + i];
+                            <td>
+                                <img src="@item.Thumbnail" style="width:100px; height:100px;"><br>
+                                <a href="ResourceEdit?name=@Model.PageConfig.Name&serial=@item.Serial">@item.Name</a><br>
+                                @foreach (MyUtility.MyUI.MyExplain explain in item.Explain)
+                                {
+                                    MyUtility.MyUI.MyMenu menu = Model.ResourceConfig.Data.MenuType.Find(m => m.Name.Equals(explain.Name));
+                                    if (menu.View)
+                                    {
+                                        @explain.Value<br>
+                                    }
+                                }
+                            </td>
+                            @if (Model.ResourceConfig.Data.MenuItem.Count <= l + i + 1)
+                            {
+                                break;
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div>
+        <form action="./ResourceList?action=DownloadButton_Clicked&amp;controller=ResourceList" method="post">
+            <input type="text" id="ResourceName" name="ResourceName" value="@Model.PageConfig.Name" hidden />
+            <button type="submit" class="btn-primary m-3">一覧ＤＬ</button>
+            <button type="button" class="btn-primary m-3" onclick="location.href='index';">Homeへ</button>
+            @Html.AntiForgeryToken()
+        </form>
+    </div>
+    <div>
+        <details>
+            <summary>新規追加</summary>
+            <button type="button" class="btn-primary m-3" onclick="location.href='ResourceEdit?name=@Model.PageConfig.Name&serial=&edit=on';">新規追加</button>
+        </details>
+    </div>
+    <div>
+        <details>
+            <summary>一括ＵＬ</summary>
+            <form action="./ResourceList?action=UploadButton_Clicked&amp;controller=ResourceList" enctype="multipart/form-data" method="post">
+                <input type="text" id="ResourceName" name="ResourceName" value="@Model.PageConfig.Name" hidden />
+                <button type="submit" class="btn-primary m-3" id="CsvUpLoad" disabled>一括ＵＬ</button>
+                <input type="file" id="CsvFile" name="CsvFile" accept=".csv" onchange="selectFile();" />
+                @Html.AntiForgeryToken()
+            </form>
+        </details>
+        <script>
+            function selectFile() {
+                try {
+                    if (document.getElementById('CsvFile').value === "") {
+                        document.getElementById('CsvUpLoad').disabled = true;;
+                    }
+                    else {
+                        document.getElementById('CsvUpLoad').disabled = false;;
+                    }
+                }
+                catch (e) {
+                    document.write(e)
+                }
+            }
+        </script>
+    </div>
+</div>

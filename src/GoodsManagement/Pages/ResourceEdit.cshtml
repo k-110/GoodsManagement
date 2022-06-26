@@ -1,0 +1,113 @@
+﻿@page
+@model GoodsManagement.Pages.ResourceEditModel
+@{
+    ViewData["Title"] = Model.PageConfig.TitelText;
+}
+
+<div class="text-center">
+    <h1 class="display-4">@Model.PageConfig.MessageText</h1>
+</div>
+<div>
+    @{
+        string EditText = (Model.PageConfig.Edit) ? "&edit=on" : "";
+        string ButtonName = (Model.PageConfig.Edit) ? "情報更新" : "編集開始";
+        MyUtility.MyUI.MySummary MyItem = Model.ResourceConfig.Data.MenuItem[0];
+        <form action=@string.Format("./ResourceEdit?action=OnPost&amp;controller=ResourceEdit{0}", EditText) method="post">
+            <input type="text" id="ResourceName" name="ResourceName" value="@Model.PageConfig.Name" hidden />
+            <input type="text" id="Serial" name="Serial" value="@MyItem.Serial" style="width:200px;" hidden />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width:200px;"></th>
+                        <th>@MyItem.Serial</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Update</td>
+                        <td><input type="text" id="Update" name="Update" value="@MyItem.Update.ToString()" hidden />@MyItem.Update.ToString()</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>
+                            @if (Model.PageConfig.Edit)
+                            {
+                                <input type="text" id="Name" name="Name" value="@MyItem.Name" style="width:200px;" />
+                            }
+                            else
+                            {
+                                @MyItem.Name
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Thumbnail</td>
+                        <td>
+                            @if (Model.PageConfig.Edit)
+                            {
+                                <input type="text" id="Thumbnail" name="Thumbnail" value="@MyItem.Thumbnail" style="width:200px;" /><br>
+                            }
+                            else
+                            {
+                                @MyItem.Thumbnail<br>
+                            }
+                            <img src="@MyItem.Thumbnail" style="width:200px; height:200px;">
+                        </td>
+                    </tr>
+                    @foreach (MyUtility.MyUI.MyMenu menu in Model.ResourceConfig.Data.MenuType)
+                    {
+                        MyUtility.MyUI.MyExplain explain = MyItem.Explain.Find(m => m.Name.Equals(menu.Name));
+                        string IsChecked = (menu.View) ? "checked" : "";
+                        <tr>
+                            <td>@explain.Name</td>
+                            @if (menu.Option != null)
+                            {
+                                <td>
+                                    @if (Model.PageConfig.Edit)
+                                    {
+                                        <select id="@explain.Name" name="@explain.Name" style="width:200px;">
+                                            <option value="" hidden>-----</option>
+                                            @foreach (string opt in menu.Option)
+                                            {
+                                                if (explain.Value.Equals(opt))
+                                                {
+                                                    <option value="@opt" selected>@opt</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@opt">@opt</option>
+                                                }
+                                            }
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        @explain.Value
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @if (Model.PageConfig.Edit)
+                                    {
+                                        <input type="text" id="@explain.Name" name="@explain.Name" value="@explain.Value" style="width:200px;" />
+                                    }
+                                    else
+                                    {
+                                        @explain.Value
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div>
+                <button type="submit" class="btn-primary m-3">@ButtonName</button>
+                <button type="button" class="btn-primary m-3" onclick="history.back();">戻る</button>
+            </div>
+            @Html.AntiForgeryToken()
+        </form>
+    }
+</div>

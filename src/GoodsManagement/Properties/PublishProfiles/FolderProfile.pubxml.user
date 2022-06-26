@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\work\svn\GoodsManagement\src\GoodsManagement\bin\Release\net5.0\publish\</_PublishTargetUrl>
+    <History>True|2022-06-20T15:27:22.2035430Z;True|2022-06-18T13:24:14.3734893+09:00;True|2022-06-15T07:08:52.6935840+09:00;True|2022-06-15T07:08:19.6605342+09:00;True|2022-06-11T01:52:23.2543810+09:00;True|2022-06-11T01:39:17.7965768+09:00;True|2022-06-11T01:27:38.9757483+09:00;True|2022-06-11T01:26:02.0480113+09:00;True|2022-06-11T01:25:33.6469210+09:00;True|2022-06-11T01:24:21.4162860+09:00;True|2022-06-11T01:22:20.3815093+09:00;True|2022-06-03T06:25:22.9038995+09:00;True|2022-06-03T06:18:58.3787865+09:00;True|2022-06-03T06:10:16.8301664+09:00;True|2022-06-02T03:32:01.6314940+09:00;True|2022-06-02T03:29:32.3325730+09:00;</History>
+  </PropertyGroup>
+</Project>

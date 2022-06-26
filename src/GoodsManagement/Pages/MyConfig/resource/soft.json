@@ -1,0 +1,20 @@
+{
+  "TableName": "SoftInfo",
+  "MenuType": [
+    {
+      "Name": "OS",
+      "DbType": "text",
+      "Primary": false,
+      "Option": null,
+      "View": false
+    },
+    {
+      "Name": "Shape",
+      "DbType": "text",
+      "Primary": false,
+      "Option": null,
+      "View": false
+    }
+  ],
+  "MenuItem": []
+}

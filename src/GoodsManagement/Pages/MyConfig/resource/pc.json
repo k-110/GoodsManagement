@@ -1,0 +1,35 @@
+{
+  "TableName": "PCInfo",
+  "MenuType": [
+    {
+      "Name": "OS",
+      "DbType": "text",
+      "Primary": false,
+      "Option": [
+        "Windows7",
+        "Windows8",
+        "Windows10",
+        "Windows11"
+      ],
+      "View": false
+    },
+    {
+      "Name": "Shape",
+      "DbType": "text",
+      "Primary": false,
+      "Option": [
+        "ノート",
+        "デスクトップ"
+      ],
+      "View": false
+    },
+    {
+      "Name": "固定資産",
+      "DbType": "text",
+      "Primary": false,
+      "Option": null,
+      "View": false
+    }
+  ],
+  "MenuItem": []
+}

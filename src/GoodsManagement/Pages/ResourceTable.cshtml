@@ -1,0 +1,235 @@
+﻿@page
+@model GoodsManagement.Pages.ResourceTableModel
+@{
+    ViewData["Title"] = @Model.PageConfig.TitelText;
+}
+
+<div class="text-center">
+    <h1 class="display-4">@Model.PageConfig.MessageText</h1>
+</div>
+<div>
+    <form action="./ResourceTable?action=OnPost&amp;controller=ResourceTable" method="post">
+        <input type="text" id="ResourceName" name="ResourceName" value="@Model.PageConfig.Name" hidden />
+        <input type="text" id="DateText" name="DateText" value="@Model.PageConfig.DateText" hidden />
+        <table class="table" id="item_Table">
+            <thead>
+                <tr>
+                    <th>削除</th>
+                    <th>項目名</th>
+                    <th>表示</th>
+                    <th>選択肢</th>
+                    <th>順番</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>Serial</td>
+                    <td>×</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Update</td>
+                    <td>×</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Name</td>
+                    <td>〇</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Thumbnail</td>
+                    <td>〇</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @{
+                    int SerialNum = 0;
+                    foreach (MyUtility.MyUI.MyMenu item in Model.PageConfig.MenuType)
+                    {
+                        SerialNum++;
+                        string SerialLabel = "OrderButton_" + SerialNum.ToString();
+                        string OptionText = "";
+                        if (item.Option != null)
+                        {
+                            foreach (string opt in item.Option)
+                            {
+                                OptionText += opt + Environment.NewLine;
+                            }
+                        }
+                        <tr id="@SerialLabel" name="@SerialLabel">
+                            <td><input type="checkbox" id="Remove" name="Remove" @Model.PageConfig.DeleteEnable></td>
+                            <td>
+                                <input type="text" id="OldName" name="OldName" value="@item.Name" hidden>
+                                <input type="text" id="Name" name="Name" value="@item.Name" hidden>@item.Name
+                            </td>
+                            <td>
+                                <select id="View" name="View">
+                                    @if (item.View)
+                                    {
+                                        <option value="〇" selected>〇</option>
+                                        <option value="×">×</option>
+
+                                    }
+                                    else
+                                    {
+                                        <option value="〇">〇</option>
+                                        <option value="×" selected>×</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><textarea id="Option" name="Option">@OptionText</textarea></td>
+                            <td>
+                                <button type="button" class="btn-primary" onclick="upItem('@SerialLabel');">▲</button>
+                                <br>
+                                <button type="button" class="btn-primary" onclick="downItem('@SerialLabel');">▼</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div>
+            <button type="button" class="btn-primary ml-3 mb-3" onclick="addItem();">追加</button>
+            <script>
+                var orderButtonNum = @SerialNum;
+
+                //テーブルに行を追加
+                function addItem() {
+                    orderButtonNum++;
+                    let orderButtonNumLabel = 'OrderButton_' + orderButtonNum.toString(10);
+                    try {
+                        let table = document.getElementById('item_Table');
+                        let newRow = table.insertRow();
+                        let inputTag_Remove = document.createElement('input');
+                        let inputTag_OldName = document.createElement('input');
+                        let inputTag_Name = document.createElement('input');
+                        let inputTag_View = document.createElement('select');
+                        let inputTag_Option = document.createElement('textarea');
+                        let brTag = document.createElement('br')
+                        inputTag_Remove.id = inputTag_Remove.name = 'Remove';
+                        inputTag_Remove.type = 'checkbox';
+                        inputTag_OldName.id = inputTag_OldName.name = 'OldName';
+                        inputTag_OldName.hidden = true;
+                        inputTag_Name.id = inputTag_Name.name = 'Name';
+                        inputTag_View.id = inputTag_View.name = 'View';
+                        let optionT = document.createElement('option');
+                        optionT.value = optionT.text = '〇';
+                        let optionF = document.createElement('option');
+                        optionF.value = optionF.text = '×';
+                        optionF.selected = true;
+                        inputTag_View.appendChild(optionT);
+                        inputTag_View.appendChild(optionF);
+                        inputTag_Option.id = inputTag_Option.name = 'Option';
+                        let buttonU = document.createElement('input');
+                        buttonU.type = 'button';
+                        buttonU.setAttribute('class', 'btn-primary');
+                        buttonU.value = '▲';
+                        buttonU.onclick = () => { upItem(orderButtonNumLabel);}
+                        let buttonD = document.createElement('input');
+                        buttonD.type = 'button';
+                        buttonD.setAttribute('class', 'btn-primary');
+                        buttonD.value = '▼';
+                        buttonD.onclick = () => { downItem(orderButtonNumLabel); }
+                        newRow.id = newRow.name = orderButtonNumLabel;
+                        newRow.insertCell().appendChild(inputTag_Remove);
+                        newRow.insertCell().appendChild(inputTag_OldName).parentElement.appendChild(inputTag_Name);
+                        newRow.insertCell().appendChild(inputTag_View);
+                        newRow.insertCell().appendChild(inputTag_Option);
+                        let cell_Order = newRow.insertCell();
+                        cell_Order.appendChild(buttonU);
+                        cell_Order.appendChild(brTag);
+                        cell_Order.appendChild(buttonD);
+                    }
+                    catch (e) {
+                        document.write(e)
+                    }
+                }
+
+                //テーブルから削除のチェックが入っている行を削除
+                function removeItem() {
+                    try {
+                        let table = document.getElementById('item_Table');
+                        for (let i = table.rows.length; 0 < i; i--) {
+                            if (table.rows[i - 1].cells[0].firstChild != null) {
+                                if (table.rows[i - 1].cells[0].firstChild.checked) {
+                                    table.deleteRow(i - 1);
+                                }
+                            }
+                        }
+                    }
+                    catch (e) {
+                        document.write(e)
+                    }
+                }
+
+                //テーブルの行の入れ替え
+                function replacementItem(table, index1, index2) {
+                    try {
+                        if ((index1 <= 4) || (table.rows.length <= index1)) {
+                            return;
+                        }
+                        if ((index2 <= 4) || (table.rows.length <= index2)) {
+                            return;
+                        }
+                        let tempRow1 = table.rows[index1].cloneNode(true);
+                        let tempRow2 = table.rows[index2].cloneNode(true);
+                        tempRow1.cells[4].firstChild.onclick = () => { upItem(tempRow1.id); }
+                        tempRow1.cells[4].firstChild.nextSibling.nextSibling.onclick = () => { downItem(tempRow1.id); }
+                        tempRow2.cells[4].firstChild.onclick = () => { upItem(tempRow2.id); }
+                        tempRow2.cells[4].firstChild.nextSibling.nextSibling.onclick = () => { downItem(tempRow2.id); }
+                        table.rows[index1].parentNode.replaceChild(tempRow2, table.rows[index1]);
+                        table.rows[index2].parentNode.replaceChild(tempRow1, table.rows[index2]);
+                    }
+                    catch (e) {
+                        document.write(e)
+                    }
+                }
+
+                //該当の行を上に移動
+                function upItem(name) {
+                    try {
+                        let table = document.getElementById('item_Table');
+                        for (let i = table.rows.length - 1; 4 < i; i--) {
+                            if (table.rows[i].id === name) {
+                                replacementItem(table, i - 1, i);
+                                break;
+                            }
+                        }
+                    }
+                    catch (e) {
+                        document.write(e)
+                    }
+                }
+
+                //該当の行を下に移動
+                function downItem(name) {
+                    try {
+                        let table = document.getElementById('item_Table');
+                        for (let i = table.rows.length - 1; 4 < i; i--) {
+                            if (table.rows[i].id === name) {
+                                replacementItem(table, i, i + 1);
+                                break;
+                            }
+                        }
+                    }
+                    catch (e) {
+                        document.write(e)
+                    }
+                }
+            </script>
+        </div>
+        <div>
+            <button type="submit" class="btn-primary m-3" onclick="removeItem();">設定更新</button>
+            <button type="button" class="btn-primary m-3" onclick="history.back();">戻る</button>
+        </div>
+        @Html.AntiForgeryToken()
+    </form>
+</div>

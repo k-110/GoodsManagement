@@ -1,0 +1,27 @@
+[
+  {
+    "Name": "pc",
+    "Title": "パソコン",
+    "Config": "Pages/MyConfig/resource/pc.json"
+  },
+  {
+    "Name": "soft",
+    "Title": "ソフトウェア",
+    "Config": "Pages/MyConfig/resource/soft.json"
+  },
+  {
+    "Name": "ice",
+    "Title": "ICE",
+    "Config": "Pages/MyConfig/resource/ice.json"
+  },
+  {
+    "Name": "measure",
+    "Title": "計測機器",
+    "Config": "Pages/MyConfig/resource/measure.json"
+  },
+  {
+    "Name": "printer",
+    "Title": "プリンタ",
+    "Config": "Pages/MyConfig/resource/printer.json"
+  }
+]

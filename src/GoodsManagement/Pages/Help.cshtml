@@ -1,0 +1,95 @@
+﻿@page
+@model GoodsManagement.Pages.HelpModel
+@{
+    ViewData["Title"] = "Help";
+}
+
+<div class="text-center">
+    <h1 class="display-4">使い方</h1>
+</div>
+<div>
+    <div class="my-3">
+        <h2 style="background-color:lavender;"><u>Home</u></h2>
+        <div class="my-5">
+            <h4><u>項目一覧ページについて</u></h4>
+            <u>機能</u><br>
+            ・項目一覧を表示<br>
+            ・閲覧したい項目の物品一覧ページへ移動<br>
+            <img src="image/hom01.png" style="width:50%; height:50%;"><br>
+        </div>
+        <div class="my-5">
+            <h4><u>物品一覧ページについて</u></h4>
+            <u>機能</u><br>
+            ・選択した項目に登録されている物品一覧を表示<br>
+            ・選択した物品の情報ページへ移動<br>
+            ・新規追加する物品の情報ページへ移動<br>
+            ・物品一覧をcsv形式(UTF-8)のファイルでダウンロード<br>
+            ・物品一覧をcsv形式(UTF-8)のファイルを使って更新<br>
+            <img src="image/hom02.png" style="width:50%; height:50%;"><br>
+        </div>
+        <div class="my-5">
+            <h4><u>物品の情報ページについて</u></h4>
+            <u>機能</u><br>
+            ・物品の情報を表示<br>
+            ・物品の情報を編集<br>
+            ・「情報更新」ボタンでサーバーに反映<br>
+            <img src="image/hom03.png" style="width:50%; height:50%;"><br>
+        </div>
+    </div>
+    <div class="my-3">
+        <h2 style="background-color:lavender;"><u>Setting</u></h2>
+        <div class="my-5">
+            <h4><u>項目一覧編集ページについて</u></h4>
+            <u>機能</u><br>
+            ・項目一覧を表示<br>
+            ・項目の追加<br>
+            ・削除したい項目を選択(URLに「?delete=on」を付けると選択可能となる)<br>
+            ・選択した物品の情報項目編集ページへ移動<br>
+            ・「データベース更新」ボタンでサーバーに反映<br>
+            <img src="image/setting01.png" style="width:50%; height:50%;"><br>
+            <u>説明</u><br>
+            <table class="table my-3 mx-0">
+                <tbody>
+                    <tr>
+                        <td width="160">項目名</td>
+                        <td>項目一覧で表示する文字列</td>
+                    </tr>
+                    <tr>
+                        <td width="160">識別子</td>
+                        <td>項目名とテーブルを関連付ける半角の英数字のキーワード<br>ユニークな値とすること(アルファベットの大文字小文字は区別しない)</td>
+                    </tr>
+                    <tr>
+                        <td width="160">テーブル</td>
+                        <td>半角の英数字で指定するデータベース上のテーブル名<br>ユニークな値とすること(アルファベットの大文字小文字は区別しない)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="my-5">
+            <h4><u>物品の情報項目編集ページについて</u></h4>
+            <u>機能</u><br>
+            ・物品の情報項目一覧を表示<br>
+            ・物品の情報項目を追加<br>
+            ・削除したい情報項目を選択(URLに「&delete=on」を付けると選択可能となる)<br>
+            ・「設定更新」ボタンでサーバーに反映<br>
+            <img src="image/setting02.png" style="width:50%; height:50%;"><br>
+            <u>説明</u><br>
+            <table class="table my-3 mx-0">
+                <tbody>
+                    <tr>
+                        <td width="160">項目名</td>
+                        <td>半角の英数字の情報項目名<br>ユニークな値とすること(アルファベットの大文字小文字は区別しない)</td>
+                    </tr>
+                    <tr>
+                        <td width="160">表示</td>
+                        <td>物品一覧ページでの表示有無<br>〇：表示<br>×：非表示</td>
+                    </tr>
+                    <tr>
+                        <td width="160">選択肢</td>
+                        <td>物品の情報ページでの入力制限<br>・値をしていない場合はテキスト入力<br>・値を指定した場合はコンボボックスで選択</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = Model.PageConfig.TitelText;
+}
+
+<div class="text-center">
+    <h1 class="display-4">@Model.PageConfig.MessageText</h1>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Model.PageConfig.ItemName</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MyUtility.MyUI.MyButton item in Model.PageConfig.MenuItem)
+            {
+                <tr>
+                    <td><a href="@item.Link">@item.Name</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
